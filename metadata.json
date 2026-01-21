@@ -1,0 +1,8 @@
+{
+  "name": "AuraGen AI",
+  "description": "A high-end creative platform for professional-grade image generation, intelligent editing, and advanced AI assistance using Gemini models.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

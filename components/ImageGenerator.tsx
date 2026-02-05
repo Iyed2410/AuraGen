@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { AspectRatio, ImageSize, GeneratedImage } from '../types';
+import { getGeminiApiKey } from '../lib/getGeminiApiKey';
 import Notification, { NotificationType } from './Notification';
 
 interface ImageGeneratorProps {
@@ -127,7 +128,7 @@ const ImageGenerator: React.FC<ImageGeneratorProps> = ({ onSave }) => {
     setGenStep('Initializing pipeline...');
     try {
       // Create new instance right before call for fresh API key
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+      const ai = new GoogleGenAI({ apiKey: getGeminiApiKey() });
       const parts: any[] = [{ text: prompt }];
       if (negativePrompt.trim()) parts[0].text += `. Exclude: ${negativePrompt}.`;
       

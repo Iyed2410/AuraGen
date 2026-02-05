@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { GoogleGenAI, Modality } from "@google/genai";
 import { ChatMessage } from '../types';
+import { getGeminiApiKey } from '../lib/getGeminiApiKey';
 
 interface Attachment {
   data: string;
@@ -83,7 +84,7 @@ const ChatBot: React.FC = () => {
       const reader = new FileReader();
       reader.onload = async () => {
         const base64 = (reader.result as string).split(',')[1];
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+        const ai = new GoogleGenAI({ apiKey: getGeminiApiKey() });
         const result = await ai.models.generateContent({
           model: 'gemini-3-flash-preview',
           contents: [{
@@ -105,7 +106,7 @@ const ChatBot: React.FC = () => {
 
   const generateSpeech = async (text: string) => {
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+      const ai = new GoogleGenAI({ apiKey: getGeminiApiKey() });
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash-preview-tts",
         contents: [{ parts: [{ text }] }],
@@ -166,7 +167,7 @@ const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+      const ai = new GoogleGenAI({ apiKey: getGeminiApiKey() });
       const config: any = {};
       if (currentThinking) {
         config.thinkingConfig = { thinkingBudget: 0 }; // Defaulting to zero if issues persist, or valid budget

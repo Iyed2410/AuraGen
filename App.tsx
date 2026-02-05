@@ -7,6 +7,7 @@ import ImageEditor from './components/ImageEditor';
 import ChatBot from './components/ChatBot';
 import Gallery from './components/Gallery';
 import LoginView from './components/LoginView';
+import { setGeminiApiKey } from './lib/getGeminiApiKey';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>(View.GENERATE);
@@ -88,6 +89,7 @@ const App: React.FC = () => {
   // Global listener for API Key reset events from components
   useEffect(() => {
     const handleKeyReset = () => {
+      setGeminiApiKey('');
       handleLogout();
     };
     window.addEventListener('auragen:reset_key', handleKeyReset);

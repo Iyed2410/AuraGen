@@ -2,6 +2,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { GeneratedImage, AspectRatio } from '../types';
+import { getGeminiApiKey } from '../lib/getGeminiApiKey';
 import Notification, { NotificationType } from './Notification';
 
 interface ImageEditorProps {
@@ -99,7 +100,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ onSave }) => {
     if (!sourceImage) return;
     setIsProcessing(true);
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+      const ai = new GoogleGenAI({ apiKey: getGeminiApiKey() });
       const base64Data = sourceImage.split(',')[1];
       
       const manualContext = `Apply adjustments: brightness ${params.brightness}%, contrast ${params.contrast}%, saturation ${params.saturation}%.`;
